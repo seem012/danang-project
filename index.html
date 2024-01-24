@@ -200,32 +200,42 @@
     <!-- akhir foter -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
      <script>
-      function sendData() {
-        // Retrieve form data
-        var namaLengkap = document.getElementById("namaLengkap").value;
-        var alamatLengkap = document.getElementById("alamatLengkap").value;
-        var noWa = document.getElementById("noWa").value;
-        var oneTheSpon = document.getElementById("oneTheSpot").value;
-        var keluhan = document.getElementById("keluhan").value;
+       function sendData() {
+            // Retrieve form data
+            var namaLengkap = document.getElementById('namaLengkap').value;
+            var alamatLengkap = document.getElementById('alamatLengkap').value;
+            var noWa = document.getElementById('noWa').value;
+            var oneTheSpon = document.getElementById('oneTheSpon').value;
+            var keluhan = document.getElementById('keluhan').value;
 
-        // Create a CSV string with the form data
-        var newCsvContent = `${namaLengkap},${alamatLengkap},${noWa},${oneTheSpon},${keluhan}\n`;
+            // Create an object to represent the form data
+            var formData = {
+                "Nama Lengkap": namaLengkap,
+                "Alamat Lengkap": alamatLengkap,
+                "No WA/Telfpone": noWa,
+                "One The Spon/Teken": oneTheSpon,
+                "Keluhan": keluhan
+            };
 
-        // Read the existing CSV content
-        var existingCsvContent = ""; // Replace this with the actual content of your existing CSV file
+            // Check if localStorage already has a CSV data
+            var existingCsvData = localStorage.getItem('csvData');
+            var csvContent = existingCsvData ? existingCsvData + '\n' : '';
 
-        // Combine the existing and new CSV content
-        var combinedCsvContent = existingCsvContent + newCsvContent;
+            // Convert the form data to CSV format
+            csvContent += Object.values(formData).join(',') + '\n';
 
-        // Create a Blob with the combined CSV content
-        var blob = new Blob([combinedCsvContent], { type: "text/csv" });
+            // Save the updated CSV data to localStorage
+            localStorage.setItem('csvData', csvContent);
 
-        // Create a download link and trigger the download
-        var link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        link.download = "combined_data.csv";
-        link.click();
-      }
+            // Optionally, clear the form fields
+            document.getElementById('namaLengkap').value = '';
+            document.getElementById('alamatLengkap').value = '';
+            document.getElementById('noWa').value = '';
+            document.getElementById('oneTheSpon').value = '';
+            document.getElementById('keluhan').value = '';
+
+            alert('Data saved to CSV!');
+        }
     </script>
   </body>
 </html>
