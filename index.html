@@ -199,27 +199,31 @@
 
     <!-- akhir foter -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script>
+     <script>
       function sendData() {
         // Retrieve form data
         var namaLengkap = document.getElementById("namaLengkap").value;
         var alamatLengkap = document.getElementById("alamatLengkap").value;
         var noWa = document.getElementById("noWa").value;
-        var oneTheSpon = document.getElementById("oneTheSpon").value;
+        var oneTheSpon = document.getElementById("oneTheSpot").value;
         var keluhan = document.getElementById("keluhan").value;
 
-        // Create a CSV string
-        var csvContent = "data:text/csv;charset=utf-8,";
-        csvContent += "Nama Lengkap,Alamat Lengkap,No WA/Telfpone,One The Spon/Teken,Keluhan\n";
-        csvContent += `${namaLengkap},${alamatLengkap},${noWa},${oneTheSpon},${keluhan}\n`;
+        // Create a CSV string with the form data
+        var newCsvContent = `${namaLengkap},${alamatLengkap},${noWa},${oneTheSpon},${keluhan}\n`;
 
-        // Create a Blob with the CSV content
-        var blob = new Blob([csvContent], { type: "text/csv" });
+        // Read the existing CSV content
+        var existingCsvContent = ""; // Replace this with the actual content of your existing CSV file
+
+        // Combine the existing and new CSV content
+        var combinedCsvContent = existingCsvContent + newCsvContent;
+
+        // Create a Blob with the combined CSV content
+        var blob = new Blob([combinedCsvContent], { type: "text/csv" });
 
         // Create a download link and trigger the download
         var link = document.createElement("a");
         link.href = window.URL.createObjectURL(blob);
-        link.download = "form_data.csv";
+        link.download = "combined_data.csv";
         link.click();
       }
     </script>
